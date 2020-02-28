@@ -1,4 +1,5 @@
 import React from 'react'
+import io from 'socket.io-client'
 
 class Chat extends React.Component{
     
@@ -8,6 +9,18 @@ class Chat extends React.Component{
             username : '',
             message : '',
             messages : []
+        }
+
+        this.socket = io('localhost:3000')
+
+        this.socket.on('receive_message', function(data){
+            addMessage(data)
+        })
+
+        const addMessage = data => {
+            console.log(data)
+            this.setState({messages : [...this.state.messages, data]})
+            console.log(this.state.messages)
         }
     }
 
