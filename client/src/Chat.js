@@ -11,7 +11,7 @@ class Chat extends React.Component{
             messages : []
         }
 
-        this.socket = io('localhost:3000')
+        this.socket = io('localhost:3001')
 
         this.socket.on('receive_message', function(data){
             addMessage(data)
@@ -33,8 +33,9 @@ class Chat extends React.Component{
 
     handleSubmit = (e) => {
         e.preventDefault()
-        this.socket.emit('send_message', () => {
-            author : this.state.username
+        console.log('hi')
+        this.socket.emit('send_message', {
+            author : this.state.username,
             message : this.state.message
         })
         this.setState({message : ''})
@@ -43,7 +44,7 @@ class Chat extends React.Component{
     render(){
         return(
             <div>
-              <div className="container">
+              <div className="container">{console.log(this.state)}
                 <div className="row">
                     <div className="col-md-4 offset-md-4">
                         <div className="card">
@@ -61,7 +62,7 @@ class Chat extends React.Component{
                                     <br/>
                                     <input type="text" placeholder="Message" name = "message" value = {this.state.message} onChange = {this.handleFormData} className="form-control"/>
                                     <br/>
-                                    <button onSubmit = {this.handleSubmit} className="btn btn-primary form-control">Send</button>
+                                    <button onClick = {this.handleSubmit} className="btn btn-primary form-control">Send</button>
                             </div>
                         </div>
                     </div>
