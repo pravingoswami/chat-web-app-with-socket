@@ -11,6 +11,13 @@ class Chat extends React.Component{
         }
     }
 
+    handleFormData = (e) => {
+        console.log(e.target.value)
+        this.setState({
+            [e.target.name] : e.target.value
+        })
+    }
+
     render(){
         return(
             <div>
@@ -22,13 +29,15 @@ class Chat extends React.Component{
                                 <div className="card-title">Global Chat</div>
                                 <hr/>
                                 <div className="messages">
-                                    
+                                    {
+                                        this.state.messages.map(message => <div>{message.author} : {message.message}</div>)
+                                    }
                                 </div>
                             </div>
                             <div className="card-footer">
-                                    <input type="text" placeholder="Username" value = {this.state.username} className="form-control"/>
+                                    <input type="text" placeholder="Username" name = "username" value = {this.state.username} onChange = {this.handleFormData} className="form-control"/>
                                     <br/>
-                                    <input type="text" placeholder="Message" value = {this.state.message} className="form-control"/>
+                                    <input type="text" placeholder="Message" name = "message" value = {this.state.message} onChange = {this.handleFormData} className="form-control"/>
                                     <br/>
                                     <button className="btn btn-primary form-control">Send</button>
                             </div>
